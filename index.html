@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SysAid Brasil — Service Desk e ITSM com Inteligência Artificial</title>
+  <meta name="description" content="Software ITSM com IA que resolve 60% dos incidentes automaticamente. Usado por Vale, Samsung, Petrobras e mais de 400 empresas no Brasil. Agende uma demo gratuita." />
+
+  <!-- Google Tag Manager -->
+  <!-- GTM_SNIPPET_HERE -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-950: #021a0e;
+      --green-900: #042d18;
+      --green-800: #064d28;
+      --green-700: #027a4f;
+      --green-600: #00a86b;
+      --green-500: #00b574;
+      --green-400: #1fd48e;
+      --green-300: #5debb1;
+      --green-100: #ccfce5;
+      --green-50:  #f0fff8;
+      --yellow:    #f5c518;
+      --yellow-lt: #fff9db;
+      --dark:      #050f08;
+      --gray-900:  #0f1f14;
+      --gray-700:  #334155;
+      --gray-500:  #64748b;
+      --gray-300:  #cbd5e1;
+      --gray-100:  #f1f5f9;
+      --gray-50:   #f8fafc;
+      --white:     #ffffff;
+      --red:       #ef4444;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ──────────────────────────────
+       NAV
+    ────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      transition: background .3s, box-shadow .3s;
+    }
+    .nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 1px 20px rgba(0,0,0,.1);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Diamond logo mark */
+    .logo-diamond {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      transition: color .3s;
+    }
+    .nav.scrolled .nav-logo-text { color: var(--dark); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-phone {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,.8);
+      transition: color .3s;
+    }
+    .nav.scrolled .nav-phone { color: var(--gray-700); }
+    .btn-nav {
+      background: var(--green-500);
+      color: var(--white);
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-nav:hover { background: var(--green-600); transform: translateY(-1px); }
+
+    /* ──────────────────────────────
+       HERO — vídeo de fundo
+    ────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 120px 40px 80px;
+    }
+
+    /* Vídeo de fundo */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    /* Fallback animado se não tiver vídeo */
+    .hero-bg-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(0,181,116,.25) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(2,61,24,.8) 0%, transparent 70%),
+        linear-gradient(135deg, var(--green-950) 0%, var(--green-900) 40%, #042b20 100%);
+      background-size: 400% 400%;
+      animation: bgShift 12s ease infinite;
+    }
+    @keyframes bgShift {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    /* Overlay escuro sobre o vídeo */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        135deg,
+        rgba(2,29,15,.92) 0%,
+        rgba(4,45,24,.82) 50%,
+        rgba(0,80,45,.72) 100%
+      );
+    }
+
+    /* Grade sutil */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Círculo de luz */
+    .hero-glow {
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,181,116,.18) 0%, transparent 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,181,116,.15);
+      border: 1px solid rgba(0,181,116,.35);
+      color: var(--green-300);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-tag span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green-400);
+      display: block;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.7); }
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 62px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green-400);
+    }
+    .hero h1 .strike {
+      position: relative;
+      color: rgba(255,255,255,.45);
+    }
+    .hero h1 .strike::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: rgba(255,255,255,.7);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+    .hero-desc strong { color: var(--white); font-weight: 700; }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 52px;
+    }
+    .btn-hero-primary {
+      background: var(--green-500);
+      color: var(--white);
+      padding: 17px 32px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 0 0 0 rgba(0,181,116,0);
+    }
+    .btn-hero-primary:hover {
+      background: var(--green-400);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,181,116,.45);
+    }
+    .btn-hero-wa {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.2);
+      color: var(--white);
+      padding: 17px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .btn-hero-wa:hover { background: rgba(255,255,255,.18); transform: translateY(-2px); }
+    .btn-hero-wa svg { width: 20px; height: 20px; }
+
+    .hero-social-proof {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .hero-avatars {
+      display: flex;
+    }
+    .hero-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--green-900);
+      background: var(--green-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--white);
+      margin-left: -10px;
+    }
+    .hero-avatar:first-child { margin-left: 0; }
+    .hero-proof-text {
+      font-size: 13px;
+      color: rgba(255,255,255,.65);
+      line-height: 1.4;
+    }
+    .hero-proof-text strong { color: var(--green-300); font-weight: 700; }
+
+    /* Card flutuante no hero */
+    .hero-card {
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.4);
+    }
+    .hero-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .hero-card-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 28px;
+    }
+    .hc-form-group { margin-bottom: 14px; }
+    .hc-form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .hc-form-group input,
+    .hc-form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 9px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--white);
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .hc-form-group input::placeholder { color: rgba(255,255,255,.3); }
+    .hc-form-group select option { color: var(--dark); background: var(--white); }
+    .hc-form-group input:focus,
+    .hc-form-group select:focus {
+      border-color: var(--green-400);
+      background: rgba(255,255,255,.12);
+    }
+    .btn-submit-hero {
+      width: 100%;
+      background: var(--green-500);
+      color: var(--white);
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      margin-top: 4px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-submit-hero:hover { background: var(--green-400); transform: translateY(-1px); }
+    .hc-disclaimer {
+      font-size: 11px;
+      color: rgba(255,255,255,.35);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* Stats abaixo do hero */
+    .hero-stats-bar {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 48px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .hero-stat {
+      padding: 28px 24px;
+      background: rgba(255,255,255,.05);
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .hero-stat:not(:last-child) { border-right: 1px solid rgba(255,255,255,.1); }
+    .hero-stat strong {
+      display: block;
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 900;
+      color: var(--green-400);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .hero-stat span {
+      font-size: 13px;
+      color: rgba(255,255,255,.55);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ──────────────────────────────
+       LOGOS
+    ────────────────────────────── */
+    .logos {
+      padding: 48px 40px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .logos-label {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gray-500);
+      margin-bottom: 28px;
+    }
+    .logos-track {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 40px;
+    }
+    .logo-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--gray-300);
+      letter-spacing: -.3px;
+      opacity: .7;
+      transition: opacity .2s, color .2s;
+    }
+    .logo-name:hover { opacity: 1; color: var(--green-600); }
+
+    /* ──────────────────────────────
+       HELPERS
+    ────────────────────────────── */
+    .section { padding: 96px 40px; }
+    .section-sm { padding: 72px 40px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--green-600);
+      background: var(--green-50);
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--green-100);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--dark);
+    }
+    .section-sub {
+      font-size: 18px;
+      color: var(--gray-500);
+      margin-top: 14px;
+      line-height: 1.65;
+    }
+    .text-center { text-align: center; }
+    .text-center .section-sub { max-width: 580px; margin-left: auto; margin-right: auto; }
+
+    /* ──────────────────────────────
+       DORES
+    ────────────────────────────── */
+    .dores { background: var(--white); }
+    .dores-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 56px;
+    }
+    .dor-card {
+      border-radius: 20px;
+      padding: 36px 32px;
+      border: 1.5px solid var(--gray-100);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+      cursor: default;
+    }
+    .dor-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green-500), var(--green-300));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .dor-card:hover { border-color: var(--green-200, #a3f0cc); box-shadow: 0 12px 40px rgba(0,181,116,.1); transform: translateY(-4px); }
+    .dor-card:hover::before { opacity: 1; }
+    .dor-number {
+      font-size: 64px;
+      font-weight: 900;
+      color: var(--green-50);
+      line-height: 1;
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      letter-spacing: -2px;
+    }
+    .dor-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--green-50);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .dor-icon svg { width: 26px; height: 26px; color: var(--green-600); }
+    .dor-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 10px;
+      letter-spacing: -.3px;
+    }
+    .dor-card p { font-size: 15px; color: var(--gray-500); line-height: 1.65; }
+    .dor-solution {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-600);
+      background: var(--green-50);
+      padding: 6px 12px;
+      border-radius: 100px;
+    }
+
+    /* ──────────────────────────────
+       NÚMEROS IMPACTANTES
+    ────────────────────────────── */
+    .numeros { background: var(--green-950); }
+    .numeros-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .numero-item {
+      padding: 56px 32px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.06);
+    }
+    .numero-item:last-child { border-right: none; }
+    .numero-val {
+      font-size: clamp(44px, 5vw, 72px);
+      font-weight: 900;
+      color: var(--green-400);
+      letter-spacing: -3px;
+      line-height: 1;
+      display: block;
+    }
+    .numero-unit {
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 900;
+      color: var(--green-400);
+      letter-spacing: -1px;
+    }
+    .numero-label {
+      display: block;
+      font-size: 15px;
+      color: rgba(255,255,255,.5);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    /* ──────────────────────────────
+       DIFERENCIAIS
+    ────────────────────────────── */
+    .dif { background: var(--gray-50); }
+    .dif-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 56px;
+    }
+    .dif-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 32px 28px;
+      border: 1px solid var(--gray-100);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .dif-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.07); transform: translateY(-3px); }
+    .dif-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .dif-badge {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-500);
+      letter-spacing: -1px;
+    }
+    .dif-icon-box {
+      width: 44px;
+      height: 44px;
+      background: var(--green-50);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dif-icon-box svg { width: 22px; height: 22px; color: var(--green-600); }
+    .dif-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; letter-spacing: -.2px; }
+    .dif-card p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
+
+    /* ──────────────────────────────
+       SEÇÃO DE IA — dark dramático
+    ────────────────────────────── */
+    .ia { background: var(--green-950); position: relative; overflow: hidden; }
+    .ia::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,181,116,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ia-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .ia .label { color: var(--green-400); background: rgba(0,181,116,.12); border-color: rgba(0,181,116,.25); }
+    .ia .section-title { color: var(--white); }
+    .ia .section-sub { color: rgba(255,255,255,.5); }
+
+    .ia-features { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+    .ia-feat {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .ia-feat-ico {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(0,181,116,.15);
+      border: 1px solid rgba(0,181,116,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ia-feat-ico svg { width: 20px; height: 20px; color: var(--green-400); }
+    .ia-feat h4 { font-size: 16px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+    .ia-feat p { font-size: 14px; color: rgba(255,255,255,.45); line-height: 1.6; }
+
+    /* Painel visual IA */
+    .ia-panel {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 28px;
+      font-family: 'Inter', monospace;
+    }
+    .ia-panel-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .ia-panel-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .ia-panel-title { font-size: 12px; color: rgba(255,255,255,.3); font-weight: 600; margin-left: 6px; }
+    .ia-log {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ia-log-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,.04);
+      border-radius: 10px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,.06);
+      animation: fadeInRow .4s ease both;
+    }
+    @keyframes fadeInRow {
+      from { opacity:0; transform: translateX(-8px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+    .ia-log-item:nth-child(1) { animation-delay: .1s; }
+    .ia-log-item:nth-child(2) { animation-delay: .2s; }
+    .ia-log-item:nth-child(3) { animation-delay: .3s; }
+    .ia-log-item:nth-child(4) { animation-delay: .4s; }
+    .ia-log-item:nth-child(5) { animation-delay: .5s; }
+    .ia-log-item:nth-child(6) { animation-delay: .6s; }
+    .ia-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ia-status.green { background: var(--green-400); box-shadow: 0 0 6px var(--green-500); }
+    .ia-status.yellow { background: #fbbf24; box-shadow: 0 0 6px #fbbf24; }
+    .ia-status.blue { background: #60a5fa; box-shadow: 0 0 6px #60a5fa; }
+    .ia-log-text { flex: 1; font-size: 13px; color: rgba(255,255,255,.75); font-weight: 500; }
+    .ia-log-val { font-size: 12px; color: rgba(255,255,255,.3); font-weight: 600; white-space: nowrap; }
+
+    /* Agentes count */
+    .ia-agents-count {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: rgba(0,181,116,.1);
+      border: 1px solid rgba(0,181,116,.2);
+      border-radius: 12px;
+    }
+    .ia-agents-count span { font-size: 13px; color: var(--green-300); font-weight: 600; }
+    .ia-agents-count strong { font-size: 20px; color: var(--green-400); font-weight: 900; }
+
+    /* ──────────────────────────────
+       DEPOIMENTOS
+    ────────────────────────────── */
+    .dep { background: var(--white); }
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .dep-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 20px;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .dep-card:hover { box-shadow: 0 12px 40px rgba(0,181,116,.1); transform: translateY(-4px); border-color: var(--green-100); }
+    .dep-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 20px;
+    }
+    .dep-stars span { color: var(--yellow); font-size: 16px; }
+    .dep-card p {
+      font-size: 16px;
+      color: var(--gray-700);
+      line-height: 1.75;
+      font-weight: 500;
+    }
+    .dep-card p::before { content: '"'; }
+    .dep-card p::after  { content: '"'; }
+    .dep-divider {
+      height: 1px;
+      background: var(--gray-100);
+      margin: 24px 0;
+    }
+    .dep-author { display: flex; align-items: center; gap: 14px; }
+    .dep-av {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green-600), var(--green-400));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .dep-name { font-size: 15px; font-weight: 800; color: var(--dark); }
+    .dep-role { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
+
+    /* ──────────────────────────────
+       CREDENCIAIS
+    ────────────────────────────── */
+    .creds { background: var(--green-50); }
+    .creds-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .cred {
+      background: var(--white);
+      border: 1px solid var(--green-100);
+      border-radius: 14px;
+      padding: 22px 28px;
+      text-align: center;
+      min-width: 170px;
+      transition: box-shadow .2s;
+    }
+    .cred:hover { box-shadow: 0 8px 24px rgba(0,181,116,.1); }
+    .cred-ico { font-size: 30px; margin-bottom: 10px; }
+    .cred strong { display: block; font-size: 14px; font-weight: 800; color: var(--dark); }
+    .cred span { font-size: 12px; color: var(--gray-500); margin-top: 3px; display: block; }
+
+    /* ──────────────────────────────
+       COMPARATIVO
+    ────────────────────────────── */
+    .comp { background: var(--white); }
+    .comp-scroll { overflow-x: auto; margin-top: 48px; border-radius: 16px; border: 1px solid var(--gray-100); }
+    table.comp-tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .comp-tbl th {
+      padding: 18px 20px;
+      text-align: left;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      background: var(--gray-50);
+      color: var(--gray-500);
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .comp-tbl th.hl { background: var(--green-600); color: var(--white); text-align: center; }
+    .comp-tbl td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--gray-50);
+      color: var(--gray-700);
+      vertical-align: middle;
+    }
+    .comp-tbl tr:last-child td { border-bottom: none; }
+    .comp-tbl td.hl {
+      background: var(--green-50);
+      text-align: center;
+      font-weight: 700;
+      color: var(--green-700);
+    }
+    .chk { color: var(--green-500); font-weight: 900; font-size: 16px; }
+    .xmark { color: var(--red); font-weight: 900; font-size: 16px; }
+    .maybe { color: #f59e0b; font-weight: 700; }
+    .feat-name { font-weight: 600; color: var(--dark); }
+
+    /* ──────────────────────────────
+       FORM FINAL
+    ────────────────────────────── */
+    .form-final {
+      background: linear-gradient(135deg, var(--green-950) 0%, var(--green-900) 60%, var(--green-800) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .form-final::before {
+      content: '';
+      position: absolute;
+      bottom: -200px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,181,116,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .form-final-inner {
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 72px;
+      align-items: start;
+    }
+    .form-final-content .section-title { color: var(--white); letter-spacing: -1.5px; }
+    .form-final-content .section-sub { color: rgba(255,255,255,.55); margin-top: 14px; margin-bottom: 36px; }
+    .form-checks { display: flex; flex-direction: column; gap: 16px; }
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 16px;
+      color: rgba(255,255,255,.75);
+      font-weight: 500;
+    }
+    .form-check-ico {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      background: rgba(0,181,116,.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-check-ico svg { width: 16px; height: 16px; color: var(--green-400); }
+
+    .form-box {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 44px 40px;
+      box-shadow: 0 32px 80px rgba(0,0,0,.4);
+    }
+    .form-box-title { font-size: 24px; font-weight: 900; color: var(--dark); letter-spacing: -.5px; margin-bottom: 4px; }
+    .form-box-sub { font-size: 14px; color: var(--gray-500); margin-bottom: 32px; }
+    .fg { margin-bottom: 16px; }
+    .fg label { display: block; font-size: 12px; font-weight: 700; color: var(--gray-700); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+    .fg input, .fg select {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .fg input:focus, .fg select:focus { border-color: var(--green-500); }
+    .fg input::placeholder { color: var(--gray-300); }
+    .btn-final-submit {
+      width: 100%;
+      background: var(--green-500);
+      color: var(--white);
+      padding: 17px;
+      border-radius: 11px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      margin-top: 6px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-final-submit:hover {
+      background: var(--green-400);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,181,116,.4);
+    }
+    .form-wa-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 13px;
+      border: 1.5px solid #dcfce7;
+      border-radius: 10px;
+      background: #f0fdf4;
+      color: var(--green-700);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .form-wa-link:hover { background: #dcfce7; }
+    .form-wa-link svg { width: 20px; height: 20px; color: #22c55e; }
+    .form-disc { font-size: 11px; color: var(--gray-300); text-align: center; margin-top: 14px; }
+
+    /* ──────────────────────────────
+       FOOTER
+    ────────────────────────────── */
+    .footer { background: var(--dark); padding: 48px 40px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; }
+    .footer-brand strong { display: block; font-size: 20px; font-weight: 900; color: var(--white); margin-bottom: 6px; }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,.35); line-height: 1.6; }
+    .footer-links-group h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,.3); margin-bottom: 14px; }
+    .footer-links-group a { display: block; font-size: 14px; color: rgba(255,255,255,.55); margin-bottom: 10px; transition: color .2s; }
+    .footer-links-group a:hover { color: var(--green-400); }
+    .footer-bottom { max-width: 1100px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.07); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,.25); }
+
+    /* ──────────────────────────────
+       WA FLUTUANTE
+    ────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,.5);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(37,211,102,.6); }
+    .wa-float svg { width: 30px; height: 30px; }
+
+    /* ──────────────────────────────
+       RESPONSIVE
+    ────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; }
+      .nav-phone { display: none; }
+      .hero { padding: 100px 20px 60px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-card { display: none; }
+      .hero-stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .hero-stat:nth-child(2) { border-right: none; }
+      .hero-stat:nth-child(1),
+      .hero-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.1); }
+      .dores-grid, .dif-grid, .dep-grid { grid-template-columns: 1fr; }
+      .numeros-grid { grid-template-columns: repeat(2, 1fr); }
+      .numero-item:nth-child(2) { border-right: none; }
+      .ia-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-final-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-box { padding: 28px 20px; }
+      .section, .section-sm { padding: 72px 20px; }
+      .logos { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Google Tag Manager noscript -->
+<!-- GTM_NOSCRIPT_HERE -->
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <svg class="logo-diamond" viewBox="0 0 32 32" fill="none">
+      <path d="M16 2 L30 16 L16 30 L2 16 Z" fill="url(#dg)" />
+      <defs>
+        <linearGradient id="dg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#00B574"/>
+          <stop offset="100%" stop-color="#F5C518"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="nav-logo-text">SysAid</span>
+  </div>
+  <div class="nav-right">
+    <span class="nav-phone">0800 590 6006 · Ligação gratuita</span>
+    <button class="btn-nav" onclick="scrollTo('form-final')">Agendar demo gratuita</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="hero">
+
+  <!-- VÍDEO DE FUNDO — Pexels royalty-free -->
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="https://videos.pexels.com/video-files/5020282/5020282-hd_1920_1080_25fps.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Fallback animado caso o vídeo não carregue -->
+  <div class="hero-bg-fallback"></div>
+
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div style="width:100%; position:relative; z-index:2;">
+    <div class="hero-inner">
+
+      <!-- Conteúdo esquerda -->
+      <div>
+        <div class="hero-tag">
+          <span></span>
+          Gartner Magic Quadrant · G2 Leader 2025
+        </div>
+
+        <h1>
+          Pare de <span class="strike">apagar<br />incêndios</span><br />
+          no seu <em>TI.</em>
+        </h1>
+
+        <p class="hero-desc">
+          O SysAid é o único ITSM com IA que resolve
+          <strong>60% dos incidentes automaticamente</strong> —
+          antes de virar ticket, antes de travar sua equipe.
+          Usado por Vale, Petrobras e Samsung.
+        </p>
+
+        <div class="hero-ctas">
+          <button class="btn-hero-primary" onclick="scrollTo('form-final')">
+            Quero agendar minha demo →
+          </button>
+          <a class="btn-hero-wa" href="https://wa.me/5511XXXXXXXX?text=Olá%2C+quero+saber+mais+sobre+o+SysAid" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Falar pelo WhatsApp
+          </a>
+        </div>
+
+        <div class="hero-social-proof">
+          <div class="hero-avatars">
+            <div class="hero-avatar">VL</div>
+            <div class="hero-avatar">AS</div>
+            <div class="hero-avatar">JA</div>
+            <div class="hero-avatar">+</div>
+          </div>
+          <p class="hero-proof-text">
+            <strong>400+ empresas no Brasil</strong><br />
+            já modernizaram o TI com SysAid
+          </p>
+        </div>
+      </div>
+
+      <!-- Formulário flutuante — desktop -->
+      <div class="hero-card">
+        <div class="hero-card-title">Demo gratuita em 30 min</div>
+        <p class="hero-card-sub">Preencha e receba contato em 1 dia útil</p>
+
+        <form onsubmit="handleHeroForm(event)">
+          <div class="hc-form-group">
+            <label>Nome completo</label>
+            <input type="text" placeholder="João Silva" required />
+          </div>
+          <div class="hc-form-group">
+            <label>Empresa</label>
+            <input type="text" placeholder="Empresa S/A" required />
+          </div>
+          <div class="hc-form-group">
+            <label>Cargo</label>
+            <select required>
+              <option value="">Selecione</option>
+              <option>Gerente / Coord. de TI</option>
+              <option>Diretor de TI / CIO</option>
+              <option>Head of IT / Infraestrutura</option>
+              <option>Analista de TI Sênior</option>
+              <option>CEO / Diretor Geral</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="hc-form-group">
+            <label>WhatsApp</label>
+            <input type="tel" placeholder="(11) 99999-9999" required />
+          </div>
+          <button type="submit" class="btn-submit-hero">Agendar minha demo →</button>
+        </form>
+        <p class="hc-disclaimer">Sem compromisso. Sem spam.</p>
+      </div>
+
+    </div><!-- /hero-inner -->
+
+    <!-- Stats bar -->
+    <div class="hero-stats-bar">
+      <div class="hero-stat">
+        <strong>60<span style="font-size:.6em">%</span>+</strong>
+        <span>incidentes resolvidos<br />pela IA automaticamente</span>
+      </div>
+      <div class="hero-stat">
+        <strong>3×</strong>
+        <span>mais velocidade na<br />resolução de chamados</span>
+      </div>
+      <div class="hero-stat">
+        <strong>400<span style="font-size:.6em">+</span></strong>
+        <span>empresas no Brasil<br />confiam no SysAid</span>
+      </div>
+      <div class="hero-stat">
+        <strong>30</strong>
+        <span>dias para estar<br />100% operacional</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOGOS ─── -->
+<section class="logos">
+  <p class="logos-label">Empresas que já transformaram o TI com SysAid no Brasil</p>
+  <div class="logos-track">
+    <span class="logo-name">Vale</span>
+    <span class="logo-name">Petrobras</span>
+    <span class="logo-name">Unimed</span>
+    <span class="logo-name">Siemens</span>
+    <span class="logo-name">Samsung</span>
+    <span class="logo-name">L'Oréal</span>
+    <span class="logo-name">Coca-Cola</span>
+    <span class="logo-name">McDonald's</span>
+  </div>
+</section>
+
+<!-- ─── DORES ─── -->
+<section class="section dores">
+  <div class="container">
+    <div>
+      <div class="label">Você se identifica?</div>
+      <h2 class="section-title">O caos que ninguém quer admitir<br />mas todo TI enfrenta</h2>
+    </div>
+
+    <div class="dores-grid">
+      <div class="dor-card">
+        <span class="dor-number">01</span>
+        <div class="dor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3>Chamados se perdem no caos</h3>
+        <p>E-mail, WhatsApp, ligação, corredor — cada usuário abre chamado de um jeito diferente. O técnico fica apagando incêndio sem visão do todo.</p>
+        <span class="dor-solution">✓ Central única com roteamento automático</span>
+      </div>
+
+      <div class="dor-card">
+        <span class="dor-number">02</span>
+        <div class="dor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>SLA estourado todo mês</h3>
+        <p>A diretoria cobra resultado, mas sem dados confiáveis é impossível defender o time de TI — ou saber onde está o gargalo real.</p>
+        <span class="dor-solution">✓ SLA personalizado com alertas automáticos</span>
+      </div>
+
+      <div class="dor-card">
+        <span class="dor-number">03</span>
+        <div class="dor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3>Sem visibilidade para decidir</h3>
+        <p>Quais ativos estão vencendo? Quantas licenças de software estão paradas? O gestor de TI navega no escuro sem relatórios confiáveis.</p>
+        <span class="dor-solution">✓ Dashboards em tempo real + License Manager</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NÚMEROS ─── -->
+<section class="numeros">
+  <div class="container">
+    <div class="numeros-grid">
+      <div class="numero-item">
+        <strong class="numero-val" data-target="60">0</strong><span class="numero-unit">%+</span>
+        <span class="numero-label">incidentes resolvidos pela IA antes de virar ticket</span>
+      </div>
+      <div class="numero-item">
+        <strong class="numero-val" data-target="1000">0</strong><span class="numero-unit">+</span>
+        <span class="numero-label">integrações nativas: Microsoft 365, Slack, Salesforce e mais</span>
+      </div>
+      <div class="numero-item">
+        <strong class="numero-val" data-target="10">0</strong><span class="numero-unit">M</span>
+        <span class="numero-label">usuários globais em 140 países confiam no SysAid</span>
+      </div>
+      <div class="numero-item">
+        <strong class="numero-val" data-target="25">0</strong><span class="numero-unit">%</span>
+        <span class="numero-label">de redução em desperdício de licenças de software</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DIFERENCIAIS ─── -->
+<section class="section dif">
+  <div class="container">
+    <div class="text-center">
+      <div class="label">Por que o SysAid</div>
+      <h2 class="section-title">Mais do que um helpdesk.<br />Uma operação de TI inteligente.</h2>
+      <p class="section-sub">Implementação em 30 dias. Sem taxas ocultas. Suporte em português.</p>
+    </div>
+
+    <div class="dif-grid">
+      <div class="dif-card">
+        <div class="dif-top">
+          <span class="dif-badge">30 dias</span>
+          <div class="dif-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        </div>
+        <h3>Garantia de implementação</h3>
+        <p>Em 30 dias sua equipe está operacional e treinada. Não é promessa — é compromisso contratual.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-top">
+          <span class="dif-badge">1.000+</span>
+          <div class="dif-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>
+        </div>
+        <h3>Integrações sem desenvolvimento</h3>
+        <p>Microsoft 365, Azure AD, Slack, Salesforce, Intune, SharePoint — tudo pronto, sem uma linha de código.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-top">
+          <span class="dif-badge">Cloud/On</span>
+          <div class="dif-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg></div>
+        </div>
+        <h3>Você escolhe onde hospedar</h3>
+        <p>Cloud gerenciado ou On-Premise — decisão sua. Controle total dos dados da sua empresa.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-top">
+          <span class="dif-badge">All-in</span>
+          <div class="dif-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        </div>
+        <h3>Sem surpresas na fatura</h3>
+        <p>IT Asset Management incluso, sem add-on pago. Sem taxas ocultas. O preço que você vê é o que você paga.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-top">
+          <span class="dif-badge">PT-BR</span>
+          <div class="dif-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
+        </div>
+        <h3>Suporte humano em português</h3>
+        <p>Equipe dedicada no Brasil. Sem ticket internacional, sem esperar resposta em inglês, sem robô genérico.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-top">
+          <span class="dif-badge">ITIL</span>
+          <div class="dif-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        </div>
+        <h3>ITSM completo com ITIL nativo</h3>
+        <p>Incidentes, problemas, mudanças, catálogo de serviços, CMDB — tudo em uma única plataforma, sem fragmentação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── IA ─── -->
+<section class="section ia">
+  <div class="container">
+    <div class="ia-inner">
+      <div>
+        <div class="label">Inteligência Artificial para TI</div>
+        <h2 class="section-title" style="color:var(--white)">100+ agentes de IA.<br />Prontos agora.</h2>
+        <p class="section-sub">Enquanto concorrentes oferecem chatbot, o SysAid age: toma decisões, executa tarefas e resolve sozinho — 24h por dia.</p>
+
+        <div class="ia-features">
+          <div class="ia-feat">
+            <div class="ia-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+            <div>
+              <h4>Resolução autônoma de incidentes</h4>
+              <p>A IA categoriza, roteia e resolve sem esperar o técnico. 60% dos chamados fechados automaticamente.</p>
+            </div>
+          </div>
+          <div class="ia-feat">
+            <div class="ia-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+            <div>
+              <h4>Copilot treinado com seus dados</h4>
+              <p>Aprende com tickets anteriores, knowledge base e documentos internos. Fica mais inteligente com o tempo.</p>
+            </div>
+          </div>
+          <div class="ia-feat">
+            <div class="ia-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div>
+              <h4>Self-service via Microsoft Teams</h4>
+              <p>Usuário reseta senha, pede acesso e abre chamado pelo Teams — sem ligar pro TI, sem esperar.</p>
+            </div>
+          </div>
+          <div class="ia-feat">
+            <div class="ia-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div>
+              <h4>Governança total sob controle seu</h4>
+              <p>Log de todas as ações da IA. Você define o que ela pode e não pode fazer. Transparência completa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel visual -->
+      <div class="ia-panel">
+        <div class="ia-panel-bar">
+          <div class="ia-panel-dot" style="background:#ef4444"></div>
+          <div class="ia-panel-dot" style="background:#fbbf24"></div>
+          <div class="ia-panel-dot" style="background:#22c55e"></div>
+          <span class="ia-panel-title">SysAid Copilot — Agentes em execução</span>
+        </div>
+
+        <div class="ia-log">
+          <div class="ia-log-item">
+            <div class="ia-status green"></div>
+            <span class="ia-log-text">Reset de senha — resolvido automaticamente</span>
+            <span class="ia-log-val">247 hoje</span>
+          </div>
+          <div class="ia-log-item">
+            <div class="ia-status green"></div>
+            <span class="ia-log-text">Categorização e roteamento de chamados</span>
+            <span class="ia-log-val">1.893 tickets</span>
+          </div>
+          <div class="ia-log-item">
+            <div class="ia-status yellow"></div>
+            <span class="ia-log-text">Ativos com garantia vencendo em 30 dias</span>
+            <span class="ia-log-val">3 alertas</span>
+          </div>
+          <div class="ia-log-item">
+            <div class="ia-status green"></div>
+            <span class="ia-log-text">Onboarding de novo colaborador — concluído</span>
+            <span class="ia-log-val">12 hoje</span>
+          </div>
+          <div class="ia-log-item">
+            <div class="ia-status blue"></div>
+            <span class="ia-log-text">Licenças Adobe ociosas detectadas</span>
+            <span class="ia-log-val">R$ 8.400</span>
+          </div>
+          <div class="ia-log-item">
+            <div class="ia-status green"></div>
+            <span class="ia-log-text">Resumo automático de incidentes críticos</span>
+            <span class="ia-log-val">SLA 98,4%</span>
+          </div>
+        </div>
+
+        <div class="ia-agents-count">
+          <span>Agentes ativos agora</span>
+          <strong>100+</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DEPOIMENTOS ─── -->
+<section class="section dep">
+  <div class="container">
+    <div class="text-center">
+      <div class="label">Quem usa recomenda</div>
+      <h2 class="section-title">O que gestores de TI<br />de grandes empresas falam</h2>
+    </div>
+
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p>Facilidade para implementar e controlar recursos — 85% da nossa equipe de suporte trabalha remotamente e o SysAid tornou isso possível com total visibilidade.</p>
+        <div class="dep-divider"></div>
+        <div class="dep-author">
+          <div class="dep-av">AS</div>
+          <div>
+            <div class="dep-name">André Siqueira</div>
+            <div class="dep-role">Analista de TI · Samsung Brasil</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p>Um dos melhores softwares em Service Desk e Gestão de Ativos que já utilizei. A visibilidade que ele oferece para a gestão é simplesmente incomparável.</p>
+        <div class="dep-divider"></div>
+        <div class="dep-author">
+          <div class="dep-av">JA</div>
+          <div>
+            <div class="dep-name">João Alberto</div>
+            <div class="dep-role">Gestor de TI · L'Oréal Brasil</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p>Features ricas, interface intuitiva e abordagem que respeita os processos da empresa. A equipe adotou rápido e o resultado foi imediato no dia a dia.</p>
+        <div class="dep-divider"></div>
+        <div class="dep-author">
+          <div class="dep-av">VA</div>
+          <div>
+            <div class="dep-name">Victor Assumção</div>
+            <div class="dep-role">Coordenador de Infraestrutura · Coca-Cola</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CREDENCIAIS ─── -->
+<section class="section-sm creds">
+  <div class="container">
+    <div class="text-center">
+      <div class="label">Reconhecimentos</div>
+      <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Líder reconhecido pelo mercado global</h2>
+    </div>
+    <div class="creds-row">
+      <div class="cred"><div class="cred-ico">🏆</div><strong>Gartner Magic Quadrant</strong><span>IT Service Management Tools</span></div>
+      <div class="cred"><div class="cred-ico">⭐</div><strong>Gartner Peer Insights</strong><span>Customers' Choice · 2 anos</span></div>
+      <div class="cred"><div class="cred-ico">🥇</div><strong>G2 Grid Leader</strong><span>Spring 2025</span></div>
+      <div class="cred"><div class="cred-ico">✅</div><strong>TrustRadius</strong><span>Buyer's Choice 2026</span></div>
+      <div class="cred"><div class="cred-ico">🌍</div><strong>10 milhões</strong><span>de usuários em 140 países</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMPARATIVO ─── -->
+<section class="section comp">
+  <div class="container">
+    <div class="text-center">
+      <div class="label">Comparativo</div>
+      <h2 class="section-title">Por que o SysAid vence<br />Freshservice, Jira e GLPI?</h2>
+    </div>
+    <div class="comp-scroll">
+      <table class="comp-tbl">
+        <thead>
+          <tr>
+            <th>Funcionalidade</th>
+            <th class="hl">SysAid</th>
+            <th>Freshservice</th>
+            <th>Jira SM</th>
+            <th>GLPI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feat-name">IA nativa com 100+ agentes</td>
+            <td class="hl"><span class="chk">✓</span></td>
+            <td><span class="maybe">Limitado</span></td>
+            <td><span class="maybe">Limitado</span></td>
+            <td><span class="xmark">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Implementação garantida em 30 dias</td>
+            <td class="hl"><span class="chk">✓</span></td>
+            <td><span class="maybe">Variável</span></td>
+            <td><span class="xmark">✗</span></td>
+            <td><span class="xmark">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">IT Asset Management incluso</td>
+            <td class="hl"><span class="chk">✓ Sem custo extra</span></td>
+            <td><span class="maybe">Add-on pago</span></td>
+            <td><span class="xmark">✗</span></td>
+            <td><span class="chk">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Suporte local em PT-BR</td>
+            <td class="hl"><span class="chk">✓ Equipe no Brasil</span></td>
+            <td><span class="maybe">Chat global</span></td>
+            <td><span class="maybe">Chat global</span></td>
+            <td><span class="xmark">✗ Comunidade</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Cloud + On-Premise disponível</td>
+            <td class="hl"><span class="chk">✓</span></td>
+            <td><span class="maybe">Cloud apenas</span></td>
+            <td><span class="maybe">Cloud/Data Center</span></td>
+            <td><span class="chk">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Sem taxas ocultas ou add-ons</td>
+            <td class="hl"><span class="chk">✓ All-inclusive</span></td>
+            <td><span class="xmark">Add-ons cobrados</span></td>
+            <td><span class="maybe">Variável</span></td>
+            <td><span class="chk">✓ (mas sem suporte)</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Integração nativa Microsoft Teams</td>
+            <td class="hl"><span class="chk">✓</span></td>
+            <td><span class="chk">✓</span></td>
+            <td><span class="chk">✓</span></td>
+            <td><span class="xmark">✗</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FORMULÁRIO FINAL ─── -->
+<section class="section form-final" id="form-final">
+  <div class="container">
+    <div class="form-final-inner">
+      <div class="form-final-content">
+        <h2 class="section-title">Pronto para transformar<br />o TI da sua empresa?</h2>
+        <p class="section-sub">
+          Agende uma demo personalizada de 30 minutos com um especialista brasileiro.
+          Veja o SysAid funcionando com o perfil da sua empresa — sem apresentação genérica.
+        </p>
+
+        <div class="form-checks">
+          <div class="form-check">
+            <div class="form-check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+            Demo ao vivo com especialista brasileiro
+          </div>
+          <div class="form-check">
+            <div class="form-check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+            Diagnóstico gratuito do seu ambiente atual
+          </div>
+          <div class="form-check">
+            <div class="form-check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+            30 minutos, sem compromisso, sem pressão
+          </div>
+          <div class="form-check">
+            <div class="form-check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+            Retorno em até 1 dia útil
+          </div>
+        </div>
+      </div>
+
+      <div class="form-box">
+        <h3 class="form-box-title">Agendar minha demo gratuita</h3>
+        <p class="form-box-sub">Preencha abaixo — menos de 1 minuto</p>
+
+        <form id="main-form" onsubmit="handleMainForm(event)">
+          <div class="fg">
+            <label>Nome completo *</label>
+            <input type="text" placeholder="João Silva" required />
+          </div>
+          <div class="fg">
+            <label>Empresa *</label>
+            <input type="text" placeholder="Empresa S/A" required />
+          </div>
+          <div class="fg">
+            <label>Cargo *</label>
+            <select required>
+              <option value="">Selecione seu cargo</option>
+              <option>Gerente / Coordenador de TI</option>
+              <option>Diretor de TI / CIO</option>
+              <option>Head of IT / Infraestrutura</option>
+              <option>Analista de TI Sênior</option>
+              <option>CEO / Diretor Geral</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>WhatsApp *</label>
+            <input type="tel" placeholder="(11) 99999-9999" required />
+          </div>
+          <div class="fg">
+            <label>E-mail corporativo *</label>
+            <input type="email" placeholder="joao@empresa.com.br" required />
+          </div>
+          <button type="submit" class="btn-final-submit">Agendar minha demo gratuita →</button>
+        </form>
+
+        <a class="form-wa-link" href="https://wa.me/5511XXXXXXXX?text=Olá%2C+quero+agendar+uma+demo+do+SysAid" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Prefiro falar pelo WhatsApp agora
+        </a>
+        <p class="form-disc">Seus dados são usados somente para contato. Nunca repassados a terceiros.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <strong>SysAid Brasil</strong>
+      <p>SYSAID BRASIL TECNOLOGIA LTDA<br />CNPJ 15.564.967/0001-73<br />Av. Ibirapuera, 2907, Conj 603 — São Paulo, SP</p>
+    </div>
+    <div class="footer-links-group">
+      <h4>Produto</h4>
+      <a href="https://sysaid.com.br/funcionalidades/help-desk/" target="_blank">Help Desk</a>
+      <a href="https://sysaid.com.br/funcionalidades/itsm/" target="_blank">ITSM</a>
+      <a href="https://sysaid.com.br/funcionalidades/sysaid-copilot/" target="_blank">SysAid Copilot</a>
+      <a href="https://sysaid.com.br/funcionalidades/gerenciamento-de-ativos/" target="_blank">Gestão de Ativos</a>
+    </div>
+    <div class="footer-links-group">
+      <h4>Empresa</h4>
+      <a href="https://sysaid.com.br/sobre/" target="_blank">Sobre o SysAid</a>
+      <a href="https://sysaid.com.br" target="_blank">Site oficial</a>
+      <a href="tel:08005906006">0800 590 6006</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 SysAid Technologies Ltd. Todos os direitos reservados.</p>
+    <p>Política de Privacidade · LGPD</p>
+  </div>
+</footer>
+
+<!-- ─── WA FLUTUANTE ─── -->
+<a class="wa-float" href="https://wa.me/5511XXXXXXXX?text=Olá%2C+quero+saber+mais+sobre+o+SysAid" target="_blank" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  /* Nav scroll */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Scroll helper */
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* Counter animation */
+  const counters = document.querySelectorAll('.numero-val[data-target]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const duration = 1800;
+      const start = performance.now();
+      const tick = (now) => {
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target).toLocaleString('pt-BR');
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      observer.unobserve(el);
+    });
+  }, { threshold: .5 });
+  counters.forEach(c => observer.observe(c));
+
+  /* Form handlers */
+  function handleHeroForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ Solicitação enviada!';
+    btn.style.background = '#064d28';
+    btn.disabled = true;
+    pushLead('hero_form');
+  }
+
+  function handleMainForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ Solicitação enviada!';
+    btn.style.background = '#064d28';
+    btn.disabled = true;
+    e.target.querySelectorAll('input, select').forEach(f => f.disabled = true);
+    pushLead('main_form');
+  }
+
+  function pushLead(formId) {
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'lead_form_submit', form_id: formId });
+    }
+  }
+</script>
+
+</body>
+</html>
