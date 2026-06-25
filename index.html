@@ -6,6 +6,10 @@
   <title>SysAid Brasil — Service Desk e ITSM com Inteligência Artificial</title>
   <meta name="description" content="Software ITSM com IA que resolve 60% dos incidentes automaticamente. Usado por Vale, Samsung, Petrobras e mais de 400 empresas no Brasil. Agende uma demo gratuita." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+
   <!-- Google Tag Manager -->
   <!-- GTM_SNIPPET_HERE -->
 
@@ -61,7 +65,6 @@
       height: 68px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       padding: 0 40px;
       transition: background .3s, box-shadow .3s;
     }
@@ -74,32 +77,155 @@
       align-items: center;
       gap: 10px;
     }
-    /* Diamond logo mark */
-    .logo-diamond {
-      width: 32px;
-      height: 32px;
-      flex-shrink: 0;
+    /* Logo SVG */
+    .nav-logo img {
+      height: 30px;
+      width: auto;
+      display: block;
     }
-    .nav-logo-text {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--white);
-      letter-spacing: -0.5px;
-      transition: color .3s;
+    .nav-logo .logo-light { display: block; }
+    .nav-logo .logo-dark  { display: none; }
+    .nav.scrolled .nav-logo .logo-light { display: none; }
+    .nav.scrolled .nav-logo .logo-dark  { display: block; }
+
+    /* Inner wrapper do nav — alinha com o container da página */
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .nav.scrolled .nav-logo-text { color: var(--dark); }
     .nav-right {
       display: flex;
       align-items: center;
       gap: 20px;
     }
-    .nav-phone {
-      font-size: 14px;
-      font-weight: 600;
-      color: rgba(255,255,255,.8);
-      transition: color .3s;
+
+    /* ──────────────────────────────
+       MODAL WHATSAPP
+    ────────────────────────────── */
+    .wa-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
     }
-    .nav.scrolled .nav-phone { color: var(--gray-700); }
+    .wa-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .wa-modal {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 40px 36px 36px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      transform: translateY(20px) scale(.97);
+      transition: transform .25s;
+      position: relative;
+    }
+    .wa-modal-backdrop.open .wa-modal {
+      transform: translateY(0) scale(1);
+    }
+    .wa-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--gray-100);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--gray-500);
+      line-height: 1;
+      transition: background .2s;
+    }
+    .wa-modal-close:hover { background: var(--gray-300); }
+    .wa-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .wa-modal-ico {
+      width: 46px;
+      height: 46px;
+      background: #dcfce7;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .wa-modal-ico svg { width: 26px; height: 26px; color: #16a34a; }
+    .wa-modal h3 { font-size: 20px; font-weight: 800; color: var(--dark); letter-spacing: -.3px; }
+    .wa-modal-sub { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; margin-top: 4px; }
+    .wa-fg { margin-bottom: 16px; }
+    .wa-fg label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+    }
+    .wa-fg input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .wa-fg input:focus { border-color: #22c55e; }
+    .wa-fg input.error { border-color: var(--red); }
+    .wa-fg .field-error {
+      font-size: 12px;
+      color: var(--red);
+      margin-top: 5px;
+      display: none;
+    }
+    .wa-fg input.error + .field-error { display: block; }
+    .btn-wa-submit {
+      width: 100%;
+      background: #25d366;
+      color: var(--white);
+      padding: 15px;
+      border-radius: 11px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 4px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-wa-submit:hover { background: #16a34a; transform: translateY(-1px); }
+    .btn-wa-submit svg { width: 22px; height: 22px; }
+    .wa-modal-disc { font-size: 11px; color: var(--gray-300); text-align: center; margin-top: 12px; }
     .btn-nav {
       background: var(--green-500);
       color: var(--white);
@@ -1070,21 +1196,14 @@
 
 <!-- ─── NAV ─── -->
 <nav class="nav" id="nav">
-  <div class="nav-logo">
-    <svg class="logo-diamond" viewBox="0 0 32 32" fill="none">
-      <path d="M16 2 L30 16 L16 30 L2 16 Z" fill="url(#dg)" />
-      <defs>
-        <linearGradient id="dg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#00B574"/>
-          <stop offset="100%" stop-color="#F5C518"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <span class="nav-logo-text">SysAid</span>
-  </div>
-  <div class="nav-right">
-    <span class="nav-phone">0800 590 6006 · Ligação gratuita</span>
-    <button class="btn-nav" onclick="scrollTo('form-final')">Agendar demo gratuita</button>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img class="logo-light" src="logo-white.svg" alt="SysAid" />
+      <img class="logo-dark"  src="logo-black.svg" alt="SysAid" />
+    </div>
+    <div class="nav-right">
+      <button class="btn-nav" onclick="scrollTo('form-final')">Agendar demo gratuita</button>
+    </div>
   </div>
 </nav>
 
@@ -1129,10 +1248,10 @@
           <button class="btn-hero-primary" onclick="scrollTo('form-final')">
             Quero agendar minha demo →
           </button>
-          <a class="btn-hero-wa" href="https://wa.me/5511XXXXXXXX?text=Olá%2C+quero+saber+mais+sobre+o+SysAid" target="_blank">
+          <button class="btn-hero-wa" onclick="openWaModal()">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Falar pelo WhatsApp
-          </a>
+          </button>
         </div>
 
         <div class="hero-social-proof">
@@ -1657,10 +1776,10 @@
           <button type="submit" class="btn-final-submit">Agendar minha demo gratuita →</button>
         </form>
 
-        <a class="form-wa-link" href="https://wa.me/5511XXXXXXXX?text=Olá%2C+quero+agendar+uma+demo+do+SysAid" target="_blank">
+        <button class="form-wa-link" onclick="openWaModal()">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Prefiro falar pelo WhatsApp agora
-        </a>
+        </button>
         <p class="form-disc">Seus dados são usados somente para contato. Nunca repassados a terceiros.</p>
       </div>
     </div>
@@ -1685,7 +1804,7 @@
       <h4>Empresa</h4>
       <a href="https://sysaid.com.br/sobre/" target="_blank">Sobre o SysAid</a>
       <a href="https://sysaid.com.br" target="_blank">Site oficial</a>
-      <a href="tel:08005906006">0800 590 6006</a>
+      <a href="https://sysaid.com.br" target="_blank">sysaid.com.br</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1695,9 +1814,9 @@
 </footer>
 
 <!-- ─── WA FLUTUANTE ─── -->
-<a class="wa-float" href="https://wa.me/5511XXXXXXXX?text=Olá%2C+quero+saber+mais+sobre+o+SysAid" target="_blank" aria-label="Falar no WhatsApp">
+<button class="wa-float" onclick="openWaModal()" aria-label="Falar no WhatsApp">
   <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+</button>
 
 <script>
   /* Nav scroll */
@@ -1757,7 +1876,125 @@
       window.dataLayer.push({ event: 'lead_form_submit', form_id: formId });
     }
   }
+
+  /* ── MODAL WHATSAPP ── */
+  const WA_NUMBER = '5511XXXXXXXX'; // substituir pelo número real
+
+  function openWaModal() {
+    const backdrop = document.getElementById('wa-modal-backdrop');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('wa-nome').focus(), 50);
+  }
+
+  function closeWaModal() {
+    document.getElementById('wa-modal-backdrop').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Fechar ao clicar fora do modal
+  document.getElementById('wa-modal-backdrop').addEventListener('click', function(e) {
+    if (e.target === this) closeWaModal();
+  });
+
+  // Fechar com ESC
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWaModal(); });
+
+  // Máscara de telefone BR: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+  document.getElementById('wa-telefone').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 10) {
+      v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+    } else if (v.length > 6) {
+      v = v.replace(/^(\d{2})(\d{4})(\d*)$/, '($1) $2-$3');
+    } else if (v.length > 2) {
+      v = v.replace(/^(\d{2})(\d*)$/, '($1) $2');
+    }
+    e.target.value = v;
+    // Limpa erro ao digitar
+    e.target.classList.remove('error');
+  });
+
+  function validarTelefone(tel) {
+    const digits = tel.replace(/\D/g, '');
+    return digits.length === 10 || digits.length === 11;
+  }
+
+  document.getElementById('wa-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nomeEl = document.getElementById('wa-nome');
+    const telEl  = document.getElementById('wa-telefone');
+    let ok = true;
+
+    // Valida nome
+    if (nomeEl.value.trim().length < 2) {
+      nomeEl.classList.add('error');
+      ok = false;
+    } else {
+      nomeEl.classList.remove('error');
+    }
+
+    // Valida telefone
+    if (!validarTelefone(telEl.value)) {
+      telEl.classList.add('error');
+      ok = false;
+    } else {
+      telEl.classList.remove('error');
+    }
+
+    if (!ok) return;
+
+    const nome = nomeEl.value.trim();
+    const tel  = telEl.value.trim();
+    const msg  = encodeURIComponent(`Olá! Meu nome é ${nome}, telefone ${tel}. Quero saber mais sobre o SysAid.`);
+
+    // Dispara evento GTM
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'whatsapp_lead', nome, telefone: tel });
+    }
+
+    // Abre WhatsApp e fecha modal
+    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    closeWaModal();
+
+    // Limpa campos
+    nomeEl.value = '';
+    telEl.value  = '';
+  });
 </script>
+
+<!-- ── MODAL WHATSAPP ── -->
+<div class="wa-modal-backdrop" id="wa-modal-backdrop" role="dialog" aria-modal="true" aria-label="Falar pelo WhatsApp">
+  <div class="wa-modal">
+    <button class="wa-modal-close" onclick="closeWaModal()" aria-label="Fechar">×</button>
+
+    <div class="wa-modal-header">
+      <div class="wa-modal-ico">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <h3>Falar pelo WhatsApp</h3>
+    </div>
+    <p class="wa-modal-sub">Preencha para iniciar a conversa — só leva 10 segundos.</p>
+
+    <form id="wa-form">
+      <div class="wa-fg">
+        <label for="wa-nome">Seu nome *</label>
+        <input type="text" id="wa-nome" placeholder="João Silva" autocomplete="given-name" required />
+        <span class="field-error">Por favor, informe seu nome.</span>
+      </div>
+      <div class="wa-fg">
+        <label for="wa-telefone">Telefone / WhatsApp *</label>
+        <input type="tel" id="wa-telefone" placeholder="(11) 99999-9999" autocomplete="tel" inputmode="numeric" required />
+        <span class="field-error">Digite um telefone válido com DDD.</span>
+      </div>
+      <button type="submit" class="btn-wa-submit">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Iniciar conversa no WhatsApp
+      </button>
+    </form>
+    <p class="wa-modal-disc">Seus dados são usados somente para iniciar a conversa.</p>
+  </div>
+</div>
 
 </body>
 </html>
